@@ -34,11 +34,38 @@ public class IntList {
 		return rest.get(i - 1);
 	}
 
-	public static void main(String[] args) {
-		IntList L = new IntList(15, null);
-		L = new IntList(10, L);
-		L = new IntList(5, L);
+	/** if 2 numbers in a row are the same,
+	 * we add them together and make one large node **/
+	public void addAdjacent(){
+		IntList p = this;
+		while (p != null && p.rest != null){
+			if (p.first == p.rest.first) {
+				p.first *= 2;
+				p.rest = p.rest.rest;
+			}
+			p = p.rest;
+		}
+	}
 
-		System.out.println(L.get(100));
+	public void squareInt(int x){
+		IntList p = this;
+		while (p != null){
+			p.rest = new IntList(p.first * p.first, p.rest);
+			if (p.rest.rest == null) {
+				p.rest = new IntList(x, null);
+			}
+			p = p.rest.rest;
+
+		}
+	}
+
+	public static void main(String[] args) {
+		IntList L = new IntList(2, null);
+		L = new IntList(1, L);
+//		L = new IntList(1, L);
+//		L.addAdjacent();
+		L.squareInt(5);
+
+//		System.out.println(L.get(100));
 	}
 } 
